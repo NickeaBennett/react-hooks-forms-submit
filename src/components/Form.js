@@ -3,6 +3,7 @@ import React, { useState } from "react";
 function Form() {
   const [firstName, setFirstName] = useState("Sylvia");
   const [lastName, setLastName] = useState("Woods");
+  const [submittedData, setSubmittedData] = useState([]);
 
   function handleFirstNameChange(event) {
     setFirstName(event.target.value);
@@ -14,11 +15,9 @@ function Form() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const formData = {
-      firstName : firstName,
-      lastName : lastName,
-    };
-    props.sendFormDateSomewhere(formData);
+    const formData = {firstName : firstName, lastName : lastName,};
+    const dataArray = [...submittedData, formData];
+    setSubmittedData(dataArray);
     setFirstName("");
     setLastName("");
   }
