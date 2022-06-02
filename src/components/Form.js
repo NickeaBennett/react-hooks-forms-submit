@@ -18,7 +18,7 @@ function Form() {
       firstName : firstName,
       lastName : lastName,
     };
-    PaymentResponse.sendFormDateSomewhere(formData);
+    props.sendFormDateSomewhere(formData);
     setFirstName("");
     setLastName("");
   }
