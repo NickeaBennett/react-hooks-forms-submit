@@ -1,29 +1,32 @@
 import React, { useState } from "react";
 
 function Form() {
-  const [firstName, setFirstName] = useState("Sylvia");
-  const [lastName, setLastName] = useState("Woods");
+  const [firstName, setFirstName] = useState("Nickea");
+  const [lastName, setLastName] = useState("Bennett");
   const [submittedData, setSubmittedData] = useState([]);
   const [errors, setErrors] = useState([]);
 
   function handleFirstNameChange(event) {
     setFirstName(event.target.value);
   }
+
   function handleLastNameChange(event) {
     setLastName(event.target.value);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    // first name validation/required
-    if (firstName > 0) {
-      const formData = {firstName : firstName, lastName : lastName,};
-      const dataArray = [...submittedData, formData];
-      setSubmittedData(dataArray);
-      setFirstName("");
-      setLastName("");
-      setErrors([]);
-    }
+  // first name is required
+  if (firstName.length && lastName.length > 0) {
+    const formData = { firstName: firstName, lastName: lastName };
+    const dataArray = [...submittedData, formData];
+    setSubmittedData(dataArray);
+    setFirstName("");
+    setLastName("");
+    setErrors([]);
+  } else {
+    setErrors(["First & last name is required!"]);
+  }
   }
 
   const listOfSubmissions = submittedData.map((data, index) => {
@@ -33,6 +36,7 @@ function Form() {
       </div>
     );
   });
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -40,6 +44,14 @@ function Form() {
         <input type="text" onChange={handleLastNameChange} value={lastName} />
         <button type="submit">Submit</button>
       </form>
+      {/* conditionally render error messages */}
+      {errors.length > 0
+        ? errors.map((error, index) => (
+            <p key={index} style={{ color: "red" }}>
+              {error}
+            </p>
+          ))
+        : null}
       <h3>Submissions</h3>
       {listOfSubmissions}
     </div>
