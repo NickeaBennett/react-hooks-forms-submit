@@ -4,10 +4,10 @@ function Form() {
   const [firstName, setFirstName] = useState("Sylvia");
   const [lastName, setLastName] = useState("Woods");
   const [submittedData, setSubmittedData] = useState([]);
+  const [errors, setErrors] = useState([]);
 
   function handleFirstNameChange(event) {
     setFirstName(event.target.value);
-    console.log(setFirstName)
   }
   function handleLastNameChange(event) {
     setLastName(event.target.value);
@@ -15,11 +15,15 @@ function Form() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const formData = {firstName : firstName, lastName : lastName,};
-    const dataArray = [...submittedData, formData];
-    setSubmittedData(dataArray);
-    setFirstName("");
-    setLastName("");
+    // first name validation/required
+    if (firstName > 0) {
+      const formData = {firstName : firstName, lastName : lastName,};
+      const dataArray = [...submittedData, formData];
+      setSubmittedData(dataArray);
+      setFirstName("");
+      setLastName("");
+      setErrors([]);
+    }
   }
 
   const listOfSubmissions = submittedData.map((data, index) => {
